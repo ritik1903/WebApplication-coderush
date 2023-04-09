@@ -20,12 +20,12 @@
                     <%= post.content %>
                     <br>
                     <small>
-                        <%= post.user%>
+                        <%= post.user %>
                     </small>
                 </p>
                 <div class="post-comments">
                     <%if (locals.user) { %>
-                        <form action="/comment/create" method="POST">
+                        <form action="/comments/create" method="POST">
                             <input type="text" name="content" placeholder="Add Comment....">
                             <input type="text" name="post" value="<%= post._id %>">
                             <input type="submit" value="Add Comment">
