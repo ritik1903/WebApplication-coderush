@@ -17,6 +17,35 @@ module.exports.profile = function(req, res){
     }
 }
 
+
+//Render the update
+module.exports.update = async function(req, res){
+    // if(req.user.id == req.params.id){
+    //     User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+    //         req.flash('success', 'updated');
+    //         return res.redirect('back');
+    //     });
+    // }else{
+    //     req.flash('error', 'Unauthorized');
+    //     return res.status(401).send('Unauthorized');
+    // }
+    if(req.user.id == req.params.id){
+        try{
+            let user = await User.findById(req.params.id);
+            User.uploadedAvatar(req, res, function(err){
+                if(err){console.log('*****Multer Error:', err)}
+                console.log(req.file);
+            });
+        }catch(err){
+            req.flash('error', err);
+            return res.redirect('back')
+        }
+    }else{
+        req.flash('error', 'Unauthorized');
+        return res.status(401).send('Unauthorized');
+    }
+}
+
 //Render the sign up page
 module.exports.signUp = function(req,res){
     if (req.isAuthenticated()){
